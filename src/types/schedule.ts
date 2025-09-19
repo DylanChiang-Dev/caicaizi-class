@@ -20,6 +20,7 @@ export interface Course {
   weekType: WeekType; // 週次類型：全週、單週、雙週
   studentCount?: number; // 學生人數
   note?: string; // 備註信息
+  description?: string; // 課程描述
   // 保留 timePeriod 字段以兼容舊數據，但建議使用 weekRange
   timePeriod?: string; // @deprecated 使用 weekRange 替代
 }
@@ -29,6 +30,7 @@ export interface ScheduleData {
   timeSlots: TimeSlot[]; // 作息時間表
   courses: Course[]; // 課程列表
   notes: string[]; // 特殊說明
+  specialNotes?: string[]; // 特殊說明（可選）
 }
 
 // 星期枚舉
