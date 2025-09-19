@@ -33,16 +33,7 @@ export const scheduleData: ScheduleData = {
       studentCount: 29,
       weekType: "all" // 每週上課（在1-15週範圍內）
     },
-    {
-      id: "course_3",
-      name: "中國社會政治分析",
-      classroom: "主-501A",
-      dayOfWeek: 3, // 星期三
-      weekRange: "1-15",
-      periods: "3-4",
-      studentCount: 20,
-      weekType: "even" // 雙週上課
-    },
+
     {
       id: "course_4",
       name: "行政法學",
@@ -66,19 +57,30 @@ export const scheduleData: ScheduleData = {
     {
       id: "course_6",
       name: "地緣政治學",
-      classroom: "20B-3",
+      classroom: "庸夫楼208-3",
       dayOfWeek: 5, // 星期五
       periods: "5-6",
-      weekType: "even" // 雙週上課
+      weekType: "all" // 每週上課
     },
     {
       id: "course_7",
       name: "國家安全教育",
       classroom: "B4-102",
       dayOfWeek: 2, // 星期二
+      weekRange: "1-15", // 只上到第15週
       periods: "10-11",
       note: "行政管理25382（行政管理）政管25381（行政管理）紀委片25491（網絡新媒體）紀委片25481（攝影攝像）紀委片25471（紀錄片）",
-      weekType: "all" // 每週都上
+      weekType: "odd" // 單週上課
+    },
+    {
+      id: "course_8",
+      name: "中國社會政治分析",
+      classroom: "主-501A",
+      dayOfWeek: 4, // 星期四
+      weekRange: "1-15",
+      periods: "3-4",
+      studentCount: 20,
+      weekType: "all" // 每週上課
     }
   ],
   
