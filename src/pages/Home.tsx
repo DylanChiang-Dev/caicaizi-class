@@ -36,8 +36,37 @@ const Home: React.FC = () => {
           </p>
         </div>
         
+        {/* 週次選擇器 */}
+        <WeekSelector 
+          currentWeek={currentWeek}
+          onWeekChange={setCurrentWeek}
+        />
+        
+        {/* 課表 */}
+        <ScheduleTable
+          courses={scheduleData.courses}
+          timeSlots={scheduleData.timeSlots}
+          currentWeek={currentWeek}
+          onCourseClick={handleCourseClick}
+        />
+        
+        {/* 特殊說明 */}
+        {scheduleData.specialNotes && scheduleData.specialNotes.length > 0 && (
+          <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <h3 className="font-semibold text-yellow-800 mb-2">📝 特殊說明</h3>
+            <ul className="text-yellow-700 text-sm space-y-1">
+              {scheduleData.specialNotes.map((note, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>{note}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
         {/* 統計信息卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div className="bg-white rounded-lg shadow-md p-4 flex items-center">
             <div className="bg-blue-100 p-3 rounded-full mr-4">
               <BookOpen className="text-blue-600" size={24} />
@@ -74,36 +103,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        
-        {/* 週次選擇器 */}
-        <WeekSelector 
-          currentWeek={currentWeek}
-          onWeekChange={setCurrentWeek}
-        />
-        
-        {/* 課表 */}
-        <ScheduleTable
-          courses={scheduleData.courses}
-          timeSlots={scheduleData.timeSlots}
-          currentWeek={currentWeek}
-          onCourseClick={handleCourseClick}
-        />
-        
-        {/* 特殊說明 */}
-        {scheduleData.specialNotes && scheduleData.specialNotes.length > 0 && (
-          <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h3 className="font-semibold text-yellow-800 mb-2">📝 特殊說明</h3>
-            <ul className="text-yellow-700 text-sm space-y-1">
-              {scheduleData.specialNotes.map((note, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>{note}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        
+
         {/* 課程詳情模態框 */}
         <CourseModal
           course={selectedCourse}
