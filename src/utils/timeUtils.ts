@@ -85,9 +85,22 @@ export function getCurrentDateString(): string {
  * 判斷課程是否應該在指定週次顯示
  * @param weekType 週次類型 ('all' | 'odd' | 'even')
  * @param weekNumber 週次數字
+ * @param weekRange 週次範圍，如 "1-15", "1-18" 等
  * @returns 是否應該顯示
  */
-export function shouldShowCourse(weekType: 'all' | 'odd' | 'even', weekNumber: number): boolean {
+export function shouldShowCourse(
+  weekType: 'all' | 'odd' | 'even', 
+  weekNumber: number, 
+  weekRange?: string
+): boolean {
+  // 首先檢查週次範圍
+  if (weekRange) {
+    if (!isWeekInRange(weekNumber, weekRange)) {
+      return false;
+    }
+  }
+  
+  // 然後檢查單雙週類型
   switch (weekType) {
     case 'all':
       return true;
@@ -98,6 +111,25 @@ export function shouldShowCourse(weekType: 'all' | 'odd' | 'even', weekNumber: n
     default:
       return true;
   }
+}
+
+/**
+ * 檢查週次是否在指定範圍內
+ * @param weekNumber 週次數字
+ * @param weekRange 週次範圍，如 "1-15", "1-18" 等
+ * @returns 是否在範圍內
+ */
+export function isWeekInRange(weekNumber: number, weekRange: string): boolean {
+  if (!weekRange) return true;
+  
+  // 解析週次範圍，支持格式如 "1-15", "3-18" 等
+  const match = weekRange.match(/^(\d+)-(\d+)$/);
+  if (!match) return true; // 如果格式不正確，默認顯示
+  
+  const startWeek = parseInt(match[1], 10);
+  const endWeek = parseInt(match[2], 10);
+  
+  return weekNumber >= startWeek && weekNumber <= endWeek;
 }
 
 /**

@@ -26,7 +26,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
     return courses.find(course => 
       course.dayOfWeek === dayOfWeek && 
       course.periods === period &&
-      shouldShowCourse(course.weekType, currentWeek)
+      shouldShowCourse(course.weekType, currentWeek, course.weekRange || course.timePeriod)
     );
   };
   
@@ -34,7 +34,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
   const getFilteredCourses = (dayOfWeek: number): Course[] => {
     return courses.filter(course => 
       course.dayOfWeek === dayOfWeek &&
-      shouldShowCourse(course.weekType, currentWeek)
+      shouldShowCourse(course.weekType, currentWeek, course.weekRange || course.timePeriod)
     );
   };
   

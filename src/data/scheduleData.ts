@@ -18,7 +18,6 @@ export const scheduleData: ScheduleData = {
     {
       id: "course_1",
       name: "國際關係理論與實務",
-      teacher: "蔡楊",
       classroom: "A8-202",
       dayOfWeek: 1, // 星期一
       periods: "1-2",
@@ -27,46 +26,39 @@ export const scheduleData: ScheduleData = {
     {
       id: "course_2",
       name: "西方政治制度史",
-      teacher: "",
       classroom: "主-217A",
       dayOfWeek: 2, // 星期二
-      timePeriod: "1-15",
+      weekRange: "1-15", // 只上到第15週
       periods: "3-4",
       studentCount: 29,
-      courseCode: "政治23361",
-      weekType: "odd" // 單週上課
+      weekType: "all" // 每週上課（在1-15週範圍內）
     },
     {
       id: "course_3",
       name: "中國社會政治分析",
-      teacher: "",
       classroom: "主-501A",
       dayOfWeek: 3, // 星期三
-      timePeriod: "1-15",
+      weekRange: "1-15",
       periods: "3-4",
       studentCount: 20,
-      courseCode: "政治學23361",
       weekType: "even" // 雙週上課
     },
     {
       id: "course_4",
       name: "行政法學",
-      teacher: "",
       classroom: "主-1150",
-      dayOfWeek: 4, // 星期四
-      timePeriod: "1-15",
+      dayOfWeek: 5, // 星期五
+      weekRange: "1-15",
       periods: "3-4",
       studentCount: 32,
-      courseCode: "政治學24361",
       weekType: "all" // 每週都上
     },
     {
       id: "course_5",
       name: "國家安全教育",
-      teacher: "",
       classroom: "B4-102",
       dayOfWeek: 5, // 星期五
-      timePeriod: "1-15",
+      weekRange: "1-15",
       periods: "1-2",
       note: "體育法25041 法律25031（人權）法律25023（民商）法律25022（民商）法律25021（民商）法律25011（基礎）",
       weekType: "odd" // 單週上課
@@ -74,7 +66,6 @@ export const scheduleData: ScheduleData = {
     {
       id: "course_6",
       name: "地緣政治學",
-      teacher: "周天楓",
       classroom: "20B-3",
       dayOfWeek: 5, // 星期五
       periods: "5-6",
@@ -83,7 +74,6 @@ export const scheduleData: ScheduleData = {
     {
       id: "course_7",
       name: "國家安全教育",
-      teacher: "",
       classroom: "B4-102",
       dayOfWeek: 2, // 星期二
       periods: "10-11",

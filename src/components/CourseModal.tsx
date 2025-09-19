@@ -42,11 +42,6 @@ export const CourseModal: React.FC<CourseModalProps> = ({
             <h3 className="text-xl font-bold text-blue-600 mb-2">
               {course.name}
             </h3>
-            {course.courseCode && (
-              <p className="text-sm text-gray-500">
-                課程代碼：{course.courseCode}
-              </p>
-            )}
           </div>
           
           {/* 基本信息 */}
@@ -71,13 +66,6 @@ export const CourseModal: React.FC<CourseModalProps> = ({
               <span className="font-medium text-gray-700">教室：</span>
               <span className="text-gray-600">{course.classroom}</span>
             </div>
-            
-            {course.teacher && (
-              <div className="flex items-center justify-between">
-                <span className="font-medium text-gray-700">授課教師：</span>
-                <span className="text-gray-600">{course.teacher}</span>
-              </div>
-            )}
             
             {course.studentCount && (
               <div className="flex items-center justify-between">

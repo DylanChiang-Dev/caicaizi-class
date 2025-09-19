@@ -13,15 +13,15 @@ export type WeekType = 'all' | 'odd' | 'even';
 export interface Course {
   id: string; // 課程唯一標識
   name: string; // 課程名稱
-  teacher?: string; // 教師姓名
   classroom: string; // 教室位置
   dayOfWeek: number; // 星期幾 (1-7, 1=星期一)
   periods: string; // 節次，如 "1-2", "3-4"
-  timePeriod?: string; // 週次範圍，如 "1-15"
+  weekRange?: string; // 週次範圍，如 "1-15", "1-18" 等
   weekType: WeekType; // 週次類型：全週、單週、雙週
   studentCount?: number; // 學生人數
-  courseCode?: string; // 課程代碼
   note?: string; // 備註信息
+  // 保留 timePeriod 字段以兼容舊數據，但建議使用 weekRange
+  timePeriod?: string; // @deprecated 使用 weekRange 替代
 }
 
 // 課表數據類型
