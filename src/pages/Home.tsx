@@ -122,12 +122,14 @@ const Home: React.FC = () => {
         />
         
         {/* 課表 */}
-        <ScheduleTable
-          courses={scheduleData.courses}
-          timeSlots={scheduleData.timeSlots}
-          currentWeek={currentWeek}
-          onCourseClick={handleCourseClick}
-        />
+        <div className="w-full overflow-x-auto">
+          <ScheduleTable
+            courses={scheduleData.courses}
+            timeSlots={scheduleData.timeSlots}
+            currentWeek={currentWeek}
+            onCourseClick={handleCourseClick}
+          />
+        </div>
         
         {/* 特殊說明 */}
         {scheduleData.specialNotes && scheduleData.specialNotes.length > 0 && (

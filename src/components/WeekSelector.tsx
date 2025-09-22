@@ -18,12 +18,12 @@ export const WeekSelector: React.FC<WeekSelectorProps> = ({
   
   // 計算當前週的日期範圍
   const getWeekDateRange = (week: number) => {
-    const semesterStart = new Date('2025-09-16'); // 學期開始日期
+    const semesterStart = new Date('2025-09-15'); // 學期開始日期（週一）
     const weekStart = new Date(semesterStart);
     weekStart.setDate(semesterStart.getDate() + (week - 1) * 7);
     
     const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
+    weekEnd.setDate(weekStart.getDate() + 6); // 週日
     
     return {
       start: formatDate(weekStart),

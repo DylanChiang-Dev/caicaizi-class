@@ -42,7 +42,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       {/* 桌面端表格佈局 */}
       <div className="hidden md:block overflow-x-auto">
-        <div className="grid grid-cols-6 min-w-full">
+        <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr] min-w-[800px] w-fit">
           {/* 時間列 */}
           <TimeHeader timeSlots={timeSlots} />
           
@@ -76,7 +76,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   return (
                     <div
                       key={`${day}-${slot.period}`}
-                      className="h-32 border-b border-gray-200 p-1"
+                      className="min-h-[10rem] border-b border-gray-200 p-1"
                     >
                       {course ? (
                         <CourseCard course={course} onClick={onCourseClick} />
