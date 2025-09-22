@@ -25,13 +25,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
   return (
     <div
       className={`
-        h-full p-1.5 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:shadow-md overflow-hidden flex flex-col
+        w-full h-full p-1.5 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:shadow-md overflow-hidden flex flex-col
         ${getCardColor()}
         ${onClick ? 'hover:scale-105' : ''}
       `}
       onClick={() => onClick?.(course)}
     >
-      <div className="font-medium text-sm mb-1.5 leading-tight flex-shrink-0">
+      <div className="font-medium text-sm mb-1 leading-tight flex-shrink-0">
         <div className="truncate" title={course.name}>
           {course.name}
         </div>
@@ -48,19 +48,17 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
           <span className="ml-1 truncate">{course.periods}</span>
         </div>
         
-
-        
-        <div className="flex items-center gap-1 min-w-0">
+        <div className="flex items-start gap-1 min-w-0">
           <span className="font-medium text-gray-600 flex-shrink-0">週次</span>
           <div className="flex gap-1 min-w-0 flex-wrap">
-            <span className={`px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0 ${
+            <span className={`px-1.5 py-0.5 rounded text-xs font-medium flex-shrink-0 ${
               course.weekType === 'odd' ? 'bg-blue-100 text-blue-700' :
               course.weekType === 'even' ? 'bg-green-100 text-green-700' :
               'bg-gray-100 text-gray-700'
             }`}>
               {getWeekTypeDisplay(course.weekType)}
             </span>
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700 flex-shrink-0">
+            <span className="px-1.5 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-700 flex-shrink-0">
               {course.weekRange || course.timePeriod || '1-18'}週
             </span>
           </div>
@@ -68,7 +66,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
       </div>
       
       {isCurrentTime && (
-        <div className="mt-1.5 text-xs font-bold text-green-600 flex items-center">
+        <div className="mt-1 text-xs font-bold text-green-600 flex items-center">
           <span className="mr-1">🔥</span>
           <span>正在上課</span>
         </div>

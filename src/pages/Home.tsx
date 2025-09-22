@@ -40,43 +40,54 @@ const Home: React.FC = () => {
       const [endHour, endMin] = timeSlot.endTime.split(':').map(Number);
       const durationMinutes = (endHour * 60 + endMin) - (startHour * 60 + startMin);
       
-      // 計算課程總週數
-      let courseWeeks = maxWeek;
+      // 確定課程的開始和結束週次
+      let courseStartWeek = 1;
+      let courseEndWeek = maxWeek;
+      
       if (course.weekRange) {
         const [start, end] = course.weekRange.split('-').map(Number);
-        courseWeeks = end - start + 1;
+        courseStartWeek = start;
+        courseEndWeek = end;
       }
       
-      // 根據週次類型調整
+      // 計算課程總週數（根據週次類型）
+      let totalCourseWeeks = 0;
       if (course.weekType === 'odd') {
-        courseWeeks = Math.ceil(courseWeeks / 2);
+        // 單週課程：計算範圍內的單週數量
+        for (let week = courseStartWeek; week <= courseEndWeek; week++) {
+          if (week % 2 === 1) totalCourseWeeks++;
+        }
       } else if (course.weekType === 'even') {
-        courseWeeks = Math.floor(courseWeeks / 2);
+        // 雙週課程：計算範圍內的雙週數量
+        for (let week = courseStartWeek; week <= courseEndWeek; week++) {
+          if (week % 2 === 0) totalCourseWeeks++;
+        }
+      } else {
+        // 每週課程
+        totalCourseWeeks = courseEndWeek - courseStartWeek + 1;
       }
       
-      const courseTotalMinutes = durationMinutes * courseWeeks;
+      const courseTotalMinutes = durationMinutes * totalCourseWeeks;
       totalMinutes += courseTotalMinutes;
       
       // 計算已完成的課時
       let completedWeeks = 0;
-      const courseEndWeek = course.weekRange ? parseInt(course.weekRange.split('-')[1]) : maxWeek;
       const effectiveCurrentWeek = Math.min(actualCurrentWeek, courseEndWeek);
       
       if (course.weekType === 'odd') {
-        // 單週課程
-        for (let week = 1; week <= effectiveCurrentWeek; week += 2) {
-          if (week <= courseEndWeek) completedWeeks++;
+        // 單週課程：計算已過的單週數量
+        for (let week = courseStartWeek; week <= effectiveCurrentWeek; week++) {
+          if (week % 2 === 1) completedWeeks++;
         }
       } else if (course.weekType === 'even') {
-        // 雙週課程
-        for (let week = 2; week <= effectiveCurrentWeek; week += 2) {
-          if (week <= courseEndWeek) completedWeeks++;
+        // 雙週課程：計算已過的雙週數量
+        for (let week = courseStartWeek; week <= effectiveCurrentWeek; week++) {
+          if (week % 2 === 0) completedWeeks++;
         }
       } else {
         // 每週課程
-        completedWeeks = Math.max(0, effectiveCurrentWeek);
-        if (effectiveCurrentWeek > courseEndWeek) {
-          completedWeeks = courseEndWeek;
+        if (effectiveCurrentWeek >= courseStartWeek) {
+          completedWeeks = effectiveCurrentWeek - courseStartWeek + 1;
         }
       }
       

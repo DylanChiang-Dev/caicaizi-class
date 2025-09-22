@@ -22,7 +22,7 @@ export const TimeHeader: React.FC<TimeHeaderProps> = ({ timeSlots }) => {
           <div
             key={slot.period}
             className={`
-              min-h-[10rem] border-b border-gray-200 p-2 flex flex-col justify-center
+              min-h-[6rem] border-b border-gray-200 p-2 flex flex-col justify-center
               ${isCurrent ? 'bg-green-100 border-green-300' : 'bg-gray-50'}
             `}
           >
