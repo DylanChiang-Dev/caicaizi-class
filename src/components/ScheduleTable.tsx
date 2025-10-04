@@ -48,7 +48,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = memo(({
   }, [courses, currentWeek]);
   
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg overflow-hidden">
       {/* 桌面端表格佈局 */}
       <div className="hidden md:block overflow-x-auto">
         <div className="inline-block min-w-full">
@@ -174,9 +174,9 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = memo(({
               {/* 星期標題 */}
               <div className={`
                 p-3 font-medium text-center rounded-t-lg
-                ${isTodayColumn 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-100 text-gray-700'
+                ${isTodayColumn
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300'
                 }
               `}>
                 {dayName}
@@ -188,30 +188,30 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = memo(({
               </div>
               
               {/* 課程列表 */}
-              <div className="border border-t-0 border-gray-200 rounded-b-lg">
+              <div className="border border-t-0 border-gray-200 dark:border-gray-600 rounded-b-lg bg-white dark:bg-slate-800">
                 {dayCourses.length > 0 ? (
                   <div className="p-3 space-y-3">
                     {dayCourses.map(course => {
                       const timeSlot = timeSlots.find(slot => slot.period === course.periods);
-                      
+
                       return (
-                        <div key={course.id} className="border border-gray-200 rounded-lg p-3">
+                        <div key={course.id} className="border border-gray-200 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-slate-700">
                           <div className="flex justify-between items-start mb-2">
-                            <div className="font-medium text-sm text-gray-800">
+                            <div className="font-medium text-sm text-gray-800 dark:text-gray-200">
                               {course.name}
                             </div>
-                            <div className="text-xs text-gray-500">
+                            <div className="text-xs text-gray-500 dark:text-gray-400">
                               {timeSlot && `${timeSlot.startTime}-${timeSlot.endTime}`}
                             </div>
                           </div>
-                          
+
                           <CourseCard course={course} onClick={onCourseClick ?? undefined} />
                         </div>
                       );
                     })}
                   </div>
                 ) : (
-                  <div className="p-6 text-center text-gray-400">
+                  <div className="p-6 text-center text-gray-400 dark:text-gray-500">
                     今天沒有課程
                   </div>
                 )}

@@ -52,26 +52,26 @@ export const CourseCard: React.FC<CourseCardProps> = memo(({ course, onClick }) 
       
       <div className="text-xs space-y-1 flex-1 min-h-0">
         <div className="flex items-center min-w-0">
-          <span className="font-medium text-gray-600 flex-shrink-0">教室</span>
+          <span className="font-medium text-gray-600 dark:text-gray-400 flex-shrink-0">教室</span>
           <span className="truncate ml-1 min-w-0" title={course.classroom}>{course.classroom}</span>
         </div>
-        
+
         <div className="flex items-center min-w-0">
-          <span className="font-medium text-gray-600 flex-shrink-0">節次</span>
+          <span className="font-medium text-gray-600 dark:text-gray-400 flex-shrink-0">節次</span>
           <span className="ml-1 truncate">{course.periods}</span>
         </div>
-        
+
         <div className="flex items-start gap-1 min-w-0">
-          <span className="font-medium text-gray-600 flex-shrink-0">週次</span>
+          <span className="font-medium text-gray-600 dark:text-gray-400 flex-shrink-0">週次</span>
           <div className="flex gap-1 min-w-0 flex-wrap">
             <span className={`px-1.5 py-0.5 rounded text-xs font-medium flex-shrink-0 ${
-              course.weekType === 'odd' ? 'bg-blue-100 text-blue-700' :
-              course.weekType === 'even' ? 'bg-green-100 text-green-700' :
-              'bg-gray-100 text-gray-700'
+              course.weekType === 'odd' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' :
+              course.weekType === 'even' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' :
+              'bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300'
             }`}>
               {getWeekTypeDisplay(course.weekType)}
             </span>
-            <span className="px-1.5 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-700 flex-shrink-0">
+            <span className="px-1.5 py-0.5 rounded text-xs font-medium bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 flex-shrink-0">
               {course.weekRange || course.timePeriod || '1-18'}週
             </span>
           </div>
