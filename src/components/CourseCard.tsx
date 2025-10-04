@@ -1,35 +1,48 @@
 import React from 'react';
-import { Course } from '../types/schedule';
+import { memo } from 'react';
+import { motion } from 'framer-motion';
+import type { Course } from '../types/schedule';
 import { isToday, isCurrentTimePeriod, getWeekTypeDisplay } from '../utils/timeUtils';
+import { cardHover } from '../utils/animations';
 
 interface CourseCardProps {
   course: Course;
-  onClick?: (course: Course) => void;
+  onClick?: ((course: Course) => void) | undefined;
 }
 
-export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
+export const CourseCard: React.FC<CourseCardProps> = memo(({ course, onClick }) => {
   const isTodayCourse = isToday(course.dayOfWeek);
   const isCurrentTime = isTodayCourse && isCurrentTimePeriod(course.periods);
-  
-  // 根據課程類型設置不同顏色
+
+  // 根據課程類型設置不同顏色（支持暗黑模式）
   const getCardColor = () => {
     if (isCurrentTime) {
-      return 'bg-green-100 border-green-400 text-green-800';
+      return 'bg-green-100 dark:bg-green-900/30 border-green-400 dark:border-green-600 text-green-800 dark:text-green-200';
     }
     if (isTodayCourse) {
-      return 'bg-blue-50 border-blue-300 text-blue-800';
+      return 'bg-blue-50 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-800 dark:text-blue-200';
     }
-    return 'bg-gray-50 border-gray-200 text-gray-700';
+    return 'bg-gray-50 dark:bg-slate-700/30 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300';
   };
-  
+
   return (
-    <div
+    <motion.div
       className={`
         w-full h-full p-1.5 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:shadow-md overflow-hidden flex flex-col
         ${getCardColor()}
-        ${onClick ? 'hover:scale-105' : ''}
       `}
       onClick={() => onClick?.(course)}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      whileHover={onClick ? cardHover.whileHover : {}}
+      whileTap={onClick ? { scale: 0.95 } : {}}
+      transition={{
+        type: 'spring',
+        stiffness: 300,
+        damping: 30
+      }}
+      layout
     >
       <div className="font-medium text-sm mb-1 leading-tight flex-shrink-0">
         <div className="truncate" title={course.name}>
@@ -71,6 +84,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
           <span>正在上課</span>
         </div>
       )}
-    </div>
+    </motion.div>
   );
-};
+});
+
+CourseCard.displayName = 'CourseCard';

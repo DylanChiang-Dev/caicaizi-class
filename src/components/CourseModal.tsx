@@ -19,7 +19,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
   if (!isOpen || !course) return null;
   
   const timeSlot = timeSlots.find(slot => slot.period === course.periods);
-  const dayName = DAY_NAMES[course.dayOfWeek];
+  const dayName = DAY_NAMES[course.dayOfWeek as keyof typeof DAY_NAMES];
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">

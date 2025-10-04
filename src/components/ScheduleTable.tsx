@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Course, TimeSlot } from '../types/schedule';
+import React, { memo, useMemo, useCallback } from 'react';
+import type { Course, TimeSlot } from '../types/schedule';
 import { DAY_NAMES, DayOfWeek } from '../types/schedule';
 import { CourseCard } from './CourseCard';
-import { TimeHeader } from './TimeHeader';
 import { isToday, shouldShowCourse, isCurrentTimePeriod } from '../utils/timeUtils';
 
 interface ScheduleTableProps {
@@ -12,14 +11,14 @@ interface ScheduleTableProps {
   onCourseClick?: (course: Course) => void;
 }
 
-export const ScheduleTable: React.FC<ScheduleTableProps> = ({
+export const ScheduleTable: React.FC<ScheduleTableProps> = memo(({
   courses,
   timeSlots,
   currentWeek,
   onCourseClick
 }) => {
-  // 工作日 (星期一到星期五)
-  const weekdays = [1, 2, 3, 4, 5];
+  // 工作日 (星期一到星期五) - 使用 useMemo 優化
+  const weekdays = useMemo(() => [1, 2, 3, 4, 5], []);
   
   // 计算每个时间段的最佳高度
   const getRowHeight = (period: string): string => {
@@ -31,22 +30,22 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
     return 'max-content';
   };
   
-  // 根據星期和節次獲取課程（考慮週次過濾）
-  const getCourseByDayAndPeriod = (dayOfWeek: number, period: string): Course | undefined => {
-    return courses.find(course => 
-      course.dayOfWeek === dayOfWeek && 
+  // 根據星期和節次獲取課程（考慮週次過濾）- 使用 useCallback 優化
+  const getCourseByDayAndPeriod = useCallback((dayOfWeek: number, period: string): Course | undefined => {
+    return courses.find(course =>
+      course.dayOfWeek === dayOfWeek &&
       course.periods === period &&
       shouldShowCourse(course.weekType, currentWeek, course.weekRange || course.timePeriod)
     );
-  };
-  
-  // 過濾當前週次應該顯示的課程
-  const getFilteredCourses = (dayOfWeek: number): Course[] => {
-    return courses.filter(course => 
+  }, [courses, currentWeek]);
+
+  // 過濾當前週次應該顯示的課程 - 使用 useCallback 優化
+  const getFilteredCourses = useCallback((dayOfWeek: number): Course[] => {
+    return courses.filter(course =>
       course.dayOfWeek === dayOfWeek &&
       shouldShowCourse(course.weekType, currentWeek, course.weekRange || course.timePeriod)
     );
-  };
+  }, [courses, currentWeek]);
   
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -101,28 +100,33 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   {/* 時間段 */}
                   <div
                     className={`
-                      border-b border-r border-gray-200 p-2 flex flex-col justify-center
-                      ${isCurrent ? 'bg-green-100 border-green-300' : 'bg-gray-50'}
+                      border-b border-r border-gray-200 dark:border-gray-700 p-2 flex flex-col justify-center
+                      ${isCurrent
+                        ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-700'
+                        : 'bg-gray-50 dark:bg-slate-800/50'
+                      }
                     `}
                     style={{ gridRow: rowIndex + 2, gridColumn: 1 }}
                   >
                     <div className={`font-bold text-sm mb-1 ${
-                      isCurrent ? 'text-green-800' : 'text-gray-700'
+                      isCurrent
+                        ? 'text-green-800 dark:text-green-200'
+                        : 'text-gray-700 dark:text-gray-300'
                     }`}>
                       第{slot.period}節
                     </div>
                     <div className={`text-xs ${
-                      isCurrent ? 'text-green-600' : 'text-gray-500'
+                      isCurrent ? 'text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'
                     }`}>
                       {slot.startTime}
                     </div>
                     <div className={`text-xs ${
-                      isCurrent ? 'text-green-600' : 'text-gray-500'
+                      isCurrent ? 'text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'
                     }`}>
                       {slot.endTime}
                     </div>
                     {isCurrent && (
-                      <div className="text-xs font-bold text-green-600 mt-1">
+                      <div className="text-xs font-bold text-green-600 dark:text-green-400 mt-1">
                         ⏰ 當前
                       </div>
                     )}
@@ -135,16 +139,16 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
                     return (
                       <div
                          key={`${day}-${slot.period}`}
-                         className="border-b border-r border-gray-200 last:border-r-0 p-1 flex items-stretch"
-                         style={{ 
-                           gridRow: rowIndex + 2, 
+                         className="border-b border-r border-gray-200 dark:border-gray-700 last:border-r-0 p-1 flex items-stretch"
+                         style={{
+                           gridRow: rowIndex + 2,
                            gridColumn: colIndex + 2
                          }}
                       >
                         {course ? (
-                           <CourseCard course={course} onClick={onCourseClick} />
+                           <CourseCard course={course} onClick={onCourseClick ?? undefined} />
                          ) : (
-                           <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                           <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-600 text-xs">
                              無課程
                            </div>
                          )}
@@ -201,7 +205,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
                             </div>
                           </div>
                           
-                          <CourseCard course={course} onClick={onCourseClick} />
+                          <CourseCard course={course} onClick={onCourseClick ?? undefined} />
                         </div>
                       );
                     })}
@@ -218,4 +222,6 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
       </div>
     </div>
   );
-};
+});
+
+ScheduleTable.displayName = 'ScheduleTable';
